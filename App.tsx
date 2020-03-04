@@ -1,19 +1,35 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import {View, Text, TextInput, Button} from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+export default class App extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            isLoggedIn : false,
+            isLoading : false,
+            userToken : null
+        }
+    }
+
+    signIn = (email, pwd) => {
+        this.setState({
+            isLoggedIn : true,
+            isLoading : false,
+            userToken : 'ljshdksqj'
+        })
+    }
+
+    AuthContext = React.createContext(
+        {
+            
+        }
+    );
+
+    render() {
+        return (
+            <View>
+                <Text>Coucou</Text>
+            </View>
+        );
+    }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
