@@ -1,35 +1,58 @@
 import * as React from 'react';
-import {View, Text, TextInput, Button} from 'react-native';
+import AuthContext from './src/contexts/AuthContext';
+import {View, Text, TextInput, Button, StatusBar} from 'react-native';
+import LoginScreen from './src/screens/LoginScreen';
+import HomeScreen from "./src/screens/HomeScreen";
+import * as Font from 'expo-font';
+
 
 export default class App extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {
-            isLoggedIn : false,
-            isLoading : false,
-            userToken : null
-        }
     }
 
-    signIn = (email, pwd) => {
+    state = {
+        isLoggedIn: false,
+        isLoading: false,
+        userToken: null
+    }
+
+    signIn = () => {
         this.setState({
-            isLoggedIn : true,
-            isLoading : false,
-            userToken : 'ljshdksqj'
+            isLoggedIn: true,
+            isLoading: false,
+            userToken: 'ljshdksqj'
         })
     }
 
-    AuthContext = React.createContext(
-        {
-            
-        }
-    );
+    logOut = () => {
+        this.setState({
+            isLoggedIn: false,
+            isLoading: false,
+            userToken: null
+        })
+    }
+
 
     render() {
-        return (
-            <View>
-                <Text>Coucou</Text>
-            </View>
-        );
+        if (this.state.isLoggedIn) {
+            return (
+                <AuthContext.Provider value={{state: this.state, logOut: this.logOut}}>
+                    <HomeScreen/>
+                </AuthContext.Provider>
+            );
+        } else {
+            return (
+                <AuthContext.Provider value={{state: this.state, signIn: this.signIn}}>
+                    <LoginScreen/>
+                </AuthContext.Provider>
+            )
+        }
+    }
+
+    componentDidMount() {
+        Font.loadAsync({
+            'box-office': require('./assets/BoxOffice.ttf'),
+        })
     }
 }
